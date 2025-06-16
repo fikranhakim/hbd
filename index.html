@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selamat Ulang Tahun</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+
+  <h2 class="judul-atas">🎉 Happy Birthday 🎉</h2>
+  <div class="foto-container">
+    <img src="yg_ultah.png" alt="Foto Ulang Tahun" class="foto" />
+  </div>
+
+  <h1 id="pesan">klik apinya</h1>
+  <div class="cahaya" id="cahaya"></div>
+
+  <div class="wadah">
+    <div id="lilin">
+      <div class="garis"></div>
+      <div class="garis"></div>
+      <div class="garis"></div>
+      <div class="garis"></div>
+      <div class="garis"></div>
+      <div id="atas">
+        <div class="asap"></div>
+        <div class="asap"></div>
+        <div class="asap"></div>
+        <div id="sumbu"></div>
+        <div class="nyala" id="api"></div>
+      </div>
+    </div>
+
+    <div id="kue">
+      <div class="lapisan atas"></div>
+      <div class="krim"></div>
+      <div class="lapisan tengah"></div>
+      <div class="krim"></div>
+      <div class="lapisan bawah"></div>
+    </div>
+  </div>
+
+  <audio id="musik" src="backsound.mp3" preload="auto"></audio>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      var api = $("#api");
+      var teks = $("#pesan");
+      var musik = $("#musik")[0];
+
+      function ketikTeks(pesan, elemen, kecepatan = 100) {
+        let i = 0;
+        elemen.text("");
+        function ketik() {
+          if (i < pesan.length) {
+            elemen.append(pesan.charAt(i));
+            i++;
+            setTimeout(ketik, kecepatan);
+          }
+        }
+        ketik();
+      }
+
+      api.on("click", function () {
+        api.removeClass("nyala").addClass("padam");
+        $(".asap").each(function () {
+          $(this).addClass("asap-naik");
+        });
+        $("#cahaya").remove();
+        $("#lilin").animate({ opacity: ".5" }, 100);
+
+        const ucapan = "barakallah fii umrik, semoga diberikan kesehatan, kemudahan, kelancaran atas segala-galanya. aamiin ya rabbal alamin 🤲🏻😊";
+        ketikTeks(ucapan, teks);
+        musik.play();
+
+        confetti({
+          particleCount: 100,
+          spread: 100,
+          origin: { y: 0.6 }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
